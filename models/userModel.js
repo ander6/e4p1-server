@@ -2,10 +2,11 @@ import  Mongoose  from "mongoose";
 const Schema = Mongoose.Schema;
 
 const UserSchema = Schema({
-    id : Number,
-    title : String,
-    price : Number,
-    Description : String
+    name : String,
+    last_name: String,
+    email : String,
+    rol : String,
+    login_status : Boolean
 })
 const UserModel = Mongoose.model('users',UserSchema);
 export default UserModel;
