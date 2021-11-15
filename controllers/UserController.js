@@ -14,14 +14,14 @@ export const getUserById = (req,res) => {
         res.send({user: user});
     });
 };
-export const insertData = (req,res) => {
+export const insertUserData = (req,res) => {
     const data = req.body;
     UserModel.create(data,(err,docs) =>{
         if(err) return res.status(500).send({message: `Error al realizar la petición: ${err}`});
         res.send({data: docs});
     })
 }
-export const updateData = (req,res) => {
+export const updateUserData = (req,res) => {
     const data = req.body;
     let userId= req.params.id;
     UserModel.findByIdAndUpdate(userId,{$set:data},{new : true},(err,docs) => {
@@ -31,7 +31,7 @@ export const updateData = (req,res) => {
     })
 }
 
-export const deleteData = (req,res) =>{
+export const deleteUserData = (req,res) =>{
     let userId = req.params.id;
     UserModel.findByIdAndRemove(userId,(err,docs) =>{
         if(err) return res.status(500).send({message: `Error al realizar la petición: ${err}`});
