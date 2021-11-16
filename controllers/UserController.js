@@ -15,8 +15,13 @@ export const getUserById = (req,res) => {
     });
 };
 export const insertUserData = (req,res) => {
-    const data = req.body;
-    UserModel.create(data,(err,docs) =>{
+    const data = {
+        name : req.body.user.givenName,
+        email : req.body.user.email,
+        rol : "user",
+        login_status : false
+    };
+        UserModel.create(data,(err,docs) =>{
         if(err) return res.status(500).send({message: `Error al realizar la petición: ${err}`});
         res.send({data: docs});
     })
