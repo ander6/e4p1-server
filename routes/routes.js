@@ -3,11 +3,12 @@ import  Express  from "express";
 const router = Express.Router();
 import { getAllUsers, getUserById, insertUserData, updateUserData, deleteUserData } from "../controllers/UserController.js";
 import { getAllGarbages, getGarbageById, insertGarbageData, updateGarbageData, deleteGarbageData } from "../controllers/GarbageController.js";
+import validationMiddleware from '../middlewares/user.js';
 
 {/* USERS */}
 router.get('/users/',getAllUsers);
 router.get('/users/:id',getUserById);
-router.post('/users/',insertUserData);
+router.post('/users/',insertUserData())
 router.put('/users/:id',updateUserData);
 router.delete('/users/:id',deleteUserData);
 
