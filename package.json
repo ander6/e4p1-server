@@ -18,7 +18,8 @@
   },
   "homepage": "https://gitlab.com/Misil4/2122-e4p1-server#readme",
   "dependencies": {
-    "mongoose": "^6.0.12"
+    "mongoose": "^6.0.12",
+    "validator": "^13.7.0"
   },
   "type": "module",
   "devDependencies": {
