@@ -23,7 +23,7 @@ export const insertUserData = (req, res) => {
     };
     UserModel.findOne({ email: data.email }, (err, user) => {
         if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` });
-        if (!user) {
+        if (user === null) {
             UserModel.create(data, (err, docs) => {
                 if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` });
                 res.send({ data: docs });
