@@ -31,10 +31,10 @@ export const insertUserData = (req, res) => {
         }
         else if (user.rol === "admin") {
             data.rol = "admin";
-            res.send({ data: data,message : "admin" });
+            res.send({ user: data});
         }
         else {
-            res.send({ data: data,message : "user" });
+            res.send({ user: data});
         }
     })
 }
