@@ -21,7 +21,7 @@ export const insertUserData = (req, res) => {
         rol : "user",
         login_status : false
     };
-    UserModel.find({ email: req.body.user.email }, (err, user) => {
+    UserModel.findOne({ email: data.email }, (err, user) => {
         if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` });
         if (!user) {
             UserModel.create(data, (err, docs) => {
@@ -31,10 +31,10 @@ export const insertUserData = (req, res) => {
         }
         else if (user.rol === "admin") {
             data.rol = "admin";
-            res.send({ data: data });
+            res.send({ data: data,message : "admin" });
         }
         else {
-            res.send({ data: data });
+            res.send({ data: data,message : "user" });
         }
     })
 }
