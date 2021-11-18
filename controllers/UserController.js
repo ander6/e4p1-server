@@ -29,13 +29,7 @@ export const insertUserData = (req, res) => {
                 res.send({ data: docs });
             })
         }
-        else if (user.rol === "admin") {
-            data.rol = "admin";
-            res.send({ user: data});
-        }
-        else {
-            res.send({ user: data});
-        }
+        else {res.send({data : user})}
     })
 }
 export const updateUserData = (req, res) => {
