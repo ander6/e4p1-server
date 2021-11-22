@@ -56,6 +56,6 @@ export const updateUserStatus = (req, res) => {
     UserModel.updateOne({email: userEmail}, { $set: {login_status: true} }, { new: true }, (err, docs) => {
         if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` });
         if (!docs) return res.status(404).send({ message: `No existe ese user` });
-        res.send({ data: docs });
+        res.send({ data: userEmail });
     })
 }
