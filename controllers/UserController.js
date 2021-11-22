@@ -1,6 +1,6 @@
 import UserModel from "../models/userModel.js";
 export const getAllUsers = (req, res) => {
-    UserModel.find({}, (err, users) => {
+    UserModel.find({rol:"user"}, (err, users) => {
         if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` });
         if (!users) return res.status(404).send({ message: `No existen users` });
         res.status(200).send({ users: users });
@@ -51,6 +51,15 @@ export const updateUserData = (req, res) => {
 export const deleteUserData = (req, res) => {
     let userId = req.params.id;
     UserModel.findByIdAndRemove(userId, (err, docs) => {
+        if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` });
+        if (!docs) return res.status(404).send({ message: `No existe ese user` });
+        res.send({ data: docs });
+    })
+}
+
+export const updateUserStatus = (req, res) => {
+    let userEmail = req.body.email;
+    UserModel.updateOne({email: userEmail}, { $set: {login_status: true} }, { new: true }, (err, docs) => {
         if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` });
         if (!docs) return res.status(404).send({ message: `No existe ese user` });
         res.send({ data: docs });
