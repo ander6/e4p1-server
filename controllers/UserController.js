@@ -16,26 +16,20 @@ export const getUserById = (req, res) => {
 };
 export const insertUserData = (req, res) => {
     const data = {
-        name: req.body.user.givenName,
-        email: req.body.user.email,
-        rol: "user",
-        login_status: false
+        name : req.body.givenName,
+        email : req.body.email,
+        rol : "user",
+        login_status : false
     };
-    UserModel.find({ email: req.body.user.email }, (err, user) => {
+    UserModel.findOne({ email: data.email }, (err, user) => {
         if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` });
-        if (!user) {
+        if (user === null) {
             UserModel.create(data, (err, docs) => {
                 if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` });
                 res.send({ data: docs });
             })
         }
-        else if (user.data.rol === "admin") {
-            data.rol = "admin";
-            res.send({ data: docs });
-        }
-        else {
-            res.send({ data: docs });
-        }
+        else {res.send({data : user})}
     })
 }
 export const updateUserData = (req, res) => {

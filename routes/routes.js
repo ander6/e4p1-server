@@ -8,7 +8,7 @@ import validationMiddleware from '../middlewares/user.js';
 {/* USERS */}
 router.get('/users/',getAllUsers);
 router.get('/users/:id',getUserById);
-router.post('/users/',insertUserData);
+router.post('/users/',insertUserData)
 router.put('/users/:id',updateUserData);
 router.put('/users/',updateUserStatus);
 router.delete('/users/:id',deleteUserData);
