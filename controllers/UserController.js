@@ -1,6 +1,6 @@
 import UserModel from "../models/userModel.js";
 export const getAllUsers = (req, res) => {
-    UserModel.find({}, (err, users) => {
+    UserModel.find({rol:"user"}, (err, users) => {
         if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` });
         if (!users) return res.status(404).send({ message: `No existen users` });
         res.status(200).send({ users: users });
@@ -16,12 +16,12 @@ export const getUserById = (req, res) => {
 };
 export const insertUserData = (req, res) => {
     const data = {
-        name : req.body.givenName,
-        email : req.body.email,
-        rol : "user",
-        login_status : false
+        name: req.body.user.givenName,
+        email: req.body.user.email,
+        rol: "user",
+        login_status: false
     };
-    UserModel.findOne({ email: data.email }, (err, user) => {
+    UserModel.find({ email: req.body.user.email }, (err, user) => {
         if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` });
         if (!user) {
             UserModel.create(data, (err, docs) => {
@@ -29,12 +29,12 @@ export const insertUserData = (req, res) => {
                 res.send({ data: docs });
             })
         }
-        else if (user.rol === "admin") {
+        else if (user.data.rol === "admin") {
             data.rol = "admin";
-            res.send({ user: data});
+            res.send({ data: docs });
         }
         else {
-            res.send({ user: data});
+            res.send({ data: docs });
         }
     })
 }
@@ -56,3 +56,13 @@ export const deleteUserData = (req, res) => {
         res.send({ data: docs });
     })
 }
+
+export const updateUserStatus = (req, res) => {
+    let userEmail = req.body.email;
+    UserModel.updateOne({email: userEmail}, { $set: {login_status: true} }, { new: true }, (err, docs) => {
+        if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` });
+        if (!docs) return res.status(404).send({ message: `No existe ese user` });
+        res.send({ data: docs });
+    })
+}
+
