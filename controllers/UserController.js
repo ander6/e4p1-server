@@ -53,9 +53,15 @@ export const deleteUserData = (req, res) => {
 
 export const updateUserStatus = (req, res) => {
     let userEmail = req.body.email;
-    UserModel.updateOne({email: userEmail}, { $set: {login_status: true} }, { new: true }, (err, docs) => {
+    let login_status = true;
+    UserModel.find({email : userEmail}, (err,docs) => {
+        if (docs[0].login_status) {
+            login_status = false
+        }
+    UserModel.updateOne({email: userEmail}, { $set: {login_status: login_status} }, { new: true }, (err, docs) => {
         if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` });
         if (!docs) return res.status(404).send({ message: `No existe ese user` });
         res.send({ data: userEmail });
     })
+})
 }
