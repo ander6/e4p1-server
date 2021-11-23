@@ -5,6 +5,7 @@ const Schema = Mongoose.Schema;
 const GarbageSchema = Schema({
     location : Array,
     message : String,
+    completed : Boolean,
     user : [{ type: Schema.Types.ObjectId, ref: UserModel }]
 })
 const GarbageModel = Mongoose.model('garbages',GarbageSchema);
