@@ -3,7 +3,7 @@ import UserModel from "./userModel.js";
 const Schema = Mongoose.Schema;
 
 const GarbageSchema = Schema({
-    location : Array,
+    location : { latitude: Number, longitude: Number , timestamp: String},
     message : String,
     completed : Boolean,
     user : [{ type: Schema.Types.ObjectId, ref: UserModel }]
