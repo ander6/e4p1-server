@@ -1,4 +1,6 @@
 import GarbageModel from "../models/garbageModel.js";
+import UserModel from "../models/userModel.js";
+
 export const getAllGarbages = (req,res) => {
     GarbageModel.find({}, (err,garbages) => {
         if(err) return res.status(500).send({message: `Error al realizar la petición: ${err}`});
@@ -15,10 +17,16 @@ export const getGarbageById = (req,res) => {
     });
 };
 export const insertGarbageData = (req,res) => {
-    const data = req.body;
-    GarbageModel.create(data,(err,docs) =>{
-        if(err) return res.status(500).send({message: `Error al realizar la petición: ${err}`});
-        res.send({data: docs});
+    const data = {
+        location: req.body.data,
+        message : "Recoger basura aquí",
+        user: req.body.user
+    };
+    UserModel.findOne({ email: req.body.user }, (err, user) => {
+        GarbageModel.create({location: {latitude: data.location.latitude, longitude: data.location.longitude, timestamp: data.location.timestamp}, message : data.message, user: [user._id]},(err,docs) =>{
+            if(err) return res.status(500).send({message: `Error al realizar la petición: ${err}`});
+            res.send({data: docs});
+        })
     })
 }
 export const updateGarbageData = (req,res) => {
