@@ -21,14 +21,13 @@ export const insertGarbageData = (req,res) => {
         location: req.body.data,
         message : "Recoger basura aquí",
         completed: false,
-        user: req.body.user
+        user: req.body.user,
+        date: new Date(parseInt(req.body.data.timestamp))
     };
-    UserModel.findOne({ email: req.body.user }, (err, user) => {
-        GarbageModel.create({location: {latitude: data.location.latitude, longitude: data.location.longitude, timestamp: data.location.timestamp}, message : data.message, completed: data.completed ,user: [user._id]},(err,docs) =>{
+        GarbageModel.create({location: {latitude: data.location.latitude, longitude: data.location.longitude, timestamp:data.date}, message : data.message, completed: data.completed, user: data.user},(err,docs) =>{
             if(err) return res.status(500).send({message: `Error al realizar la petición: ${err}`});
             res.send({data: docs});
         })
-    })
 }
 export const updateGarbageData = (req,res) => {
     const data = req.body;

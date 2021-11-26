@@ -6,7 +6,7 @@ const GarbageSchema = Schema({
     location : { latitude: Number, longitude: Number , timestamp: String},
     message : String,
     completed : Boolean,
-    user : [{ type: Schema.Types.ObjectId, ref: UserModel }]
+    user : String,
 })
 const GarbageModel = Mongoose.model('garbages',GarbageSchema);
 export default GarbageModel;
