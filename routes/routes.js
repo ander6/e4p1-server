@@ -2,7 +2,7 @@ import  Express  from "express";
 
 const router = Express.Router();
 import { getAllUsers, getUserById, insertUserData, updateUserData, deleteUserData, updateUserStatus} from "../controllers/UserController.js";
-import { getAllGarbages, getGarbageById, insertGarbageData, updateGarbageData, deleteGarbageData } from "../controllers/GarbageController.js";
+import { getAllGarbages, getGarbageById, insertGarbageData, updateGarbageData, deleteGarbageData, updateGarbageStatus } from "../controllers/GarbageController.js";
 import validationMiddleware from '../middlewares/user.js';
 
 {/* USERS */}
@@ -18,6 +18,7 @@ router.get('/garbages/',getAllGarbages);
 router.get('/garbages/:id',getGarbageById);
 router.post('/garbages/',insertGarbageData);
 router.put('/garbages/:id',updateGarbageData);
+router.put('/garbages/',updateGarbageStatus);
 router.delete('/garbages/:id',deleteGarbageData);
 
 
