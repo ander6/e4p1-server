@@ -54,6 +54,7 @@ export const deleteUserData = (req, res) => {
 export const updateUserStatus = (req, res) => {
     let userEmail = req.body.email;
     let login_status = true;
+    console.log(req.body.email)
     UserModel.findOne({email : userEmail}, (err,docs) => {
         if (docs.login_status) {
             login_status = false
