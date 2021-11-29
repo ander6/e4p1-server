@@ -1,6 +1,7 @@
 import  Express  from "express";
 import Mongoose  from "mongoose";
-const mongodbRoute = 'mongodb+srv://users:users@cluster0.5dz1w.mongodb.net/ballin'
+require('dotenv').config()
+const mongodbRoute = process.env.MONGO_DB_URI
 import router from "./routes/routes.js";
 
 const app  = Express();
