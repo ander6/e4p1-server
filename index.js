@@ -1,6 +1,7 @@
 import  Express  from "express";
 import Mongoose  from "mongoose";
-require('dotenv').config()
+import dotenv from 'dotenv'
+dotenv.config()
 const mongodbRoute = process.env.MONGO_DB_URI
 import router from "./routes/routes.js";
 
