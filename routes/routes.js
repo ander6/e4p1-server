@@ -4,25 +4,26 @@ const router = Express.Router();
 import { getAllUsers, getUserById, insertUserData, updateUserData, deleteUserData, updateUserStatus} from "../controllers/UserController.js";
 import { getAllGarbages, getGarbageById, insertGarbageData, updateGarbageData, deleteGarbageData, updateGarbageStatus } from "../controllers/GarbageController.js";
 import { createNewJWT } from "../services/jwt.js";
+import { verifyJWT } from "../middlewares/verifyJWT.js";
 
 {/* JWT */}
 router.post('/token/',createNewJWT)
 
 {/* USERS */}
-router.get('/users/',getAllUsers);
-router.get('/users/:id',getUserById);
-router.post('/users/',insertUserData)
-router.put('/users/:id',updateUserData);
-router.put('/users/',updateUserStatus);
-router.delete('/users/:id',deleteUserData);
+router.get('/users/',verifyJWT,getAllUsers);
+router.get('/users/:id',verifyJWT,getUserById);
+router.post('/users/',verifyJWT,insertUserData)
+router.put('/users/:id',verifyJWT,updateUserData);
+router.put('/users/',verifyJWT,updateUserStatus);
+router.delete('/users/:id',verifyJWT,deleteUserData);
 
 {/* GARBAGES */}
-router.get('/garbages/',getAllGarbages);
-router.get('/garbages/:id',getGarbageById);
-router.post('/garbages/',insertGarbageData);
-router.put('/garbages/:id',updateGarbageData);
-router.put('/garbages/',updateGarbageStatus);
-router.delete('/garbages/:id',deleteGarbageData);
+router.get('/garbages/',verifyJWT,getAllGarbages);
+router.get('/garbages/:id',verifyJWT,getGarbageById);
+router.post('/garbages/',verifyJWT,insertGarbageData);
+router.put('/garbages/:id',verifyJWT,updateGarbageData);
+router.put('/garbages/',verifyJWT,updateGarbageStatus);
+router.delete('/garbages/:id',verifyJWT,deleteGarbageData);
 
 
 export default router;
