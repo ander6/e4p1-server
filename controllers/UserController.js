@@ -16,7 +16,7 @@ export const getUserById = (req, res) => {
 };
 export const insertUserData = (req, res) => {
     const data = {
-        name : req.body.givenName,
+        name : req.body.displayName,
         email : req.body.email,
         rol : "user",
         login_status : false
