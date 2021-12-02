@@ -16,10 +16,10 @@ export const getUserById = (req, res) => {
 };
 export const insertUserData = (req, res) => {
     const data = {
-        name: req.body.user.givenName,
-        email: req.body.user.email,
-        rol: "user",
-        login_status: false
+        name : req.body.displayName,
+        email : req.body.email,
+        rol : "user",
+        login_status : false
     };
     UserModel.find({ email: req.body.user.email }, (err, user) => {
         if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` });
@@ -59,10 +59,21 @@ export const deleteUserData = (req, res) => {
 
 export const updateUserStatus = (req, res) => {
     let userEmail = req.body.email;
-    UserModel.updateOne({email: userEmail}, { $set: {login_status: true} }, { new: true }, (err, docs) => {
+    let login_status = true;
+    console.log(req.body.email)
+    UserModel.findOne({email : userEmail}, (err,docs) => {
+        if (docs.login_status) {
+            login_status = false
+        }
+    UserModel.updateOne({email: userEmail}, { $set: {login_status: login_status} }, { new: true }, (err, docs) => {
         if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` });
         if (!docs) return res.status(404).send({ message: `No existe ese user` });
         res.send({ data: docs });
     })
+<<<<<<< HEAD
 }
 
+=======
+})
+}
+>>>>>>> Staging
