@@ -2,8 +2,7 @@ import admin from 'firebase-admin';
 import jsonwebtoken from  'jsonwebtoken'
 import { createRequire } from "module";
 const require = createRequire(import.meta.url); // construct the require method
-import dotenv from 'dotenv'
-dotenv.config()
+console.log(process.env.FIREBASE_PROJECT_ID)
 admin.initializeApp({
     credential: admin.credential.cert({
         project_id: process.env.FIREBASE_PROJECT_ID,
