@@ -14,12 +14,8 @@ admin.initializeApp({
     })
 });
 const verifyToken = async (token) => {
-    try {
-        const decoded = await admin.auth().verifyIdToken(token)
+        const decoded = await admin.auth().verifyIdToken(token,true)
         return decoded ? true : false;
-    } catch (error) {
-        console.error(error)
-    }
 }
 
 const generateAccessToken = (email) => {
@@ -28,13 +24,15 @@ const generateAccessToken = (email) => {
 const generateRefreshToken = (email) => {
     return jsonwebtoken.sign({email : email},process.env.SECRET_TOKEN_REFRESH)
 }
-export const createNewJWT = (req,res) =>{
+export const createNewJWT = async (req,res) =>{
     let token = req.body.idToken;
     let email = req.body.email
-    if (verifyToken(token)) {
+    admin.auth().verifyIdToken(token,true).then(response => {
         res.send({data : {access_token :generateAccessToken(email),refresh_token : generateRefreshToken(email)}})
-    } 
-    else {
-        res.send(404)
-    }
+    })
+    .catch(error => {
+        console.error(error);
+        res.send(401)
+    })
 }
+
