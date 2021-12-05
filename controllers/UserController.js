@@ -16,12 +16,12 @@ export const getUserById = (req, res) => {
 };
 export const insertUserData = (req, res) => {
     const data = {
-        name : req.body.displayName,
+        name : req.body.name,
         email : req.body.email,
         rol : "user",
         login_status : false
     };
-    UserModel.find({ email: req.body.user.email }, (err, user) => {
+    UserModel.find({ email: req.body.email }, (err, user) => {
         if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` });
         if (!user) {
             UserModel.create(data, (err, docs) => {
