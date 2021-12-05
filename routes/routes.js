@@ -12,7 +12,7 @@ router.post('/token/',createNewJWT)
 {/* USERS */}
 router.get('/users/',verifyJWT,getAllUsers);
 router.get('/users/:id',verifyJWT,getUserById);
-router.post('/users/',verifyJWT,insertUserData)
+router.post('/users/',insertUserData)
 router.put('/users/:id',verifyJWT,updateUserData);
 router.put('/users/',verifyJWT,updateUserStatus);
 router.delete('/users/:id',verifyJWT,deleteUserData);
