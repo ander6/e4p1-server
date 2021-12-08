@@ -6,6 +6,8 @@ import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const mongodbRoute = process.env.MONGO_DB_URI
 import router from "./routes/routes.js";
+
+
 const app = Express();
 const http = require('http')
 const server = http.createServer(app)
@@ -40,9 +42,7 @@ Mongoose.connect(mongodbRoute, options, (err) => {
     app.listen(port, () => {
         console.log(`Servidor up en ${port}`);
     });
-    server.listen(4000, () => {
-        console.log('server started on port 4000');
-    });
+    
     console.log(`Conexión con Mongo correcta.`)
 })
 
