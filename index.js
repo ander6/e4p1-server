@@ -5,15 +5,12 @@ dotenv.config()
 console.log(process.env.MONGO_DB_URI)
 const mongodbRoute = process.env.MONGO_DB_URI
 import router from "./routes/routes.js";
-import { createServer } from "http";
-import { Server } from "socket.io";
-
-const httpServer = createServer();
-export const io = new Server(httpServer, {
-
-});
-
+import http from "http";
 const app = Express();
+const server = http.createServer(app)
+import io from "socket.io";
+
+
 const port = process.env.PORT || 3001;
 app.use(Express.urlencoded({ extended: false }));
 app.use(Express.json());
@@ -42,7 +39,7 @@ Mongoose.connect(mongodbRoute, options, (err) => {
     app.listen(port, () => {
         console.log(`Servidor up en ${port}`);
     });
-    httpServer.listen(4000, () => {
+    server.listen(4000, () => {
         console.log('server started on port 4000');
     });
     console.log(`Conexión con Mongo correcta.`)
