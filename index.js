@@ -23,11 +23,6 @@ app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     next();
 })
-app.use((req, res, next) => {
-    req.io = io;
-    return next();
-})
-
 app.use(router);
 const options = {
     socketTimeoutMS: 0,
