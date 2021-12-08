@@ -23,6 +23,11 @@ app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     next();
 })
+app.use((req, res, next) => {
+    req.io = io;
+    return next();
+})
+
 app.use(router);
 const options = {
     socketTimeoutMS: 0,
@@ -36,6 +41,9 @@ Mongoose.connect(mongodbRoute, options, (err) => {
     }
     app.listen(port, () => {
         console.log(`Servidor up en ${port}`);
+    });
+    httpServer.listen(4000, () => {
+        console.log('server started on port 4000');
     });
     console.log(`Conexión con Mongo correcta.`)
 })
