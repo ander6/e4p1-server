@@ -39,7 +39,7 @@ Mongoose.connect(mongodbRoute, options, (err) => {
     if (err) {
         return console.log(`Error al conectar a la base de datos: ${err}`)
     }
-    app.listen(port, () => {
+    server.listen(port, () => {
         console.log(`Servidor up en ${port}`);
     });
     
