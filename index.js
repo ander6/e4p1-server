@@ -2,14 +2,15 @@ import Express from "express";
 import Mongoose from "mongoose";
 import dotenv from 'dotenv'
 dotenv.config()
-console.log(process.env.MONGO_DB_URI)
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 const mongodbRoute = process.env.MONGO_DB_URI
 import router from "./routes/routes.js";
-import http from "http";
 const app = Express();
+const http = require('http')
 const server = http.createServer(app)
-import io from "socket.io";
-
+const {Server} = require('socket.io')
+const io = new Server(server)
 
 const port = process.env.PORT || 3001;
 app.use(Express.urlencoded({ extended: false }));
