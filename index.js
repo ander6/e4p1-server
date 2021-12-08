@@ -10,9 +10,9 @@ import router from "./routes/routes.js";
 
 const app = Express();
 const http = require('http')
-const server = http.createServer(app)
-const {Server} = require('socket.io')
-const io = new Server(server)
+
+const server = http.createServer(app);
+const io = require('socket.io')(server); // Add this here
 
 const port = process.env.PORT || 3001;
 app.use(Express.urlencoded({ extended: false }));
