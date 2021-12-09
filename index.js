@@ -32,16 +32,15 @@ io.on('connection', socket => {
       UserModel
         .findOne({ email: email }, { new: true })
         .then(docs => {
-          if (docs.login_status) {
-            login_status = false
-        }
+         console.log(docs)
+        
         })
         
-      UserModel.updateOne({email: email}, { $set: {login_status: login_status} }, { new: true })
+      /*UserModel.updateOne({email: email}, { $set: {login_status: login_status} }, { new: true })
         .then(updatedDoc => {
           // Emitting event to update the Kitchen opened across the devices with the realtime order values
           io.sockets.emit("change_data");
-        });
+        });*/
     });
 
     socket.on("garbage_data", () => {
