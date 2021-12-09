@@ -5,6 +5,7 @@ dotenv.config()
 import { createRequire } from "module";
 import router from "./routes/routes.js"; 
 import UserModel from "./models/userModel.js";
+import GarbageModel from "./models/garbageModel.js";
 const require = createRequire(import.meta.url);
 const mongodbRoute = process.env.MONGO_DB_URI
 const app = Express()
@@ -20,7 +21,13 @@ io.on('connection', socket => {
     console.log("disconnected")})
 
     socket.on("user_data", () => {
-      UserModel.find({}).then(docs => {
+      UserModel.find({rol:"user"}).then(docs => {
+        io.sockets.emit("get_data", docs);
+      })
+    })
+
+    socket.on("garbage_data", () => {
+      GarbageModel.find({completed:false}).then(docs => {
         io.sockets.emit("get_data", docs);
       })
     })
