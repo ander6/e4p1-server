@@ -27,7 +27,7 @@ io.on('connection', socket => {
     })
 
 
-    socket.on("badge_update", email => {
+    socket.on("badge_update", async (email) => {
       let login_status=false
       UserModel
         .findOne({ email: email }, { new: true })
