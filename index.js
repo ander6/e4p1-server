@@ -9,11 +9,8 @@ import router from "./routes/routes.js";
 
 
 const app = Express();
-const server = require('http').Server(app);
-const io = require('socket.io')(server);
-server.listen(4000, () => {
-    console.log('server started on port 4000');
-});
+const server=http.createServer(app);
+const io=socketio(server);
 
 const port = process.env.PORT || 3001;
 app.use(Express.urlencoded({ extended: false }));
@@ -40,7 +37,7 @@ Mongoose.connect(mongodbRoute, options, (err) => {
     if (err) {
         return console.log(`Error al conectar a la base de datos: ${err}`)
     }
-    app.listen(port, () => {
+    server.listen(port, () => {
         console.log(`Servidor up en ${port}`);
     });
     
