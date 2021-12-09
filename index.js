@@ -3,7 +3,7 @@ import Mongoose from "mongoose";
 import dotenv from 'dotenv'
 dotenv.config()
 import { createRequire } from "module";
-import router from "./routes/routes.js";
+import router from "./routes/routes.js"; 
 const require = createRequire(import.meta.url);
 const mongodbRoute = process.env.MONGO_DB_URI
 const http=require("http");
@@ -11,8 +11,15 @@ const socketio=require('socket.io');
 
 const app = Express();
 const server=http.createServer(app);
-const io=socketio(server);
+import { userSocket } from "./services/sockets.js";
 
+
+const io = require("socket.io")(server);
+io.on("connection", socket => {
+    // either with send()
+    socket.on("users", console.log(userSocket())
+    );
+});
 const port = process.env.PORT || 3001;
 app.use(Express.urlencoded({ extended: false }));
 app.use(Express.json());
