@@ -31,10 +31,13 @@ io.on('connection', socket => {
       let login_status=false
       UserModel
         .findOne({ email: email }, { new: true })
-        .then(docs => {
-         console.log(docs)
+        const docs = await UserModel.findOne({ email: email }, { new: true })
+        .exec()
+        console.log(docs)
         
-        })
+        
+        
+        
         
       /*UserModel.updateOne({email: email}, { $set: {login_status: login_status} }, { new: true })
         .then(updatedDoc => {
