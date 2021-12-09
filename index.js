@@ -20,7 +20,7 @@ io.on('connection', socket => {
     console.log("disconnected")})
     socket.on("user_Data", async (data) => {
       const users = await UserModel.find({}) 
-      socket.emit("users", data)
+      socket.emit("users", users)
     })
   socket.send("Hello!");
 });
