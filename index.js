@@ -22,7 +22,7 @@ io.on('connection', socket => {
 
     socket.on("user_data", () => {
       UserModel.find({rol:"user"}).then(docs => {
-        io.sockets.emit("get_data", docs);
+        io.sockets.emit("get_users", docs);
       })
     })
 
@@ -37,7 +37,7 @@ io.on('connection', socket => {
 
     socket.on("garbage_data", () => {
       GarbageModel.find({completed:false}).then(docs => {
-        io.sockets.emit("get_data", docs);
+        io.sockets.emit("get_trash", docs);
       })
     })
   socket.send("Hello!");
