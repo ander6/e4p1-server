@@ -31,9 +31,12 @@ io.on('connection', socket => {
       let login_status=false
       UserModel
         .findOne({ email: email }, { new: true })
-        if (docs.login_status) {
-          login_status = false
-      }
+        .then(docs => {
+          if (docs.login_status) {
+            login_status = false
+        }
+        })
+        
       UserModel.updateOne({email: userEmail}, { $set: {login_status: login_status} }, { new: true })
         .then(updatedDoc => {
           // Emitting event to update the Kitchen opened across the devices with the realtime order values
