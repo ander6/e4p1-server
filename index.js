@@ -37,7 +37,7 @@ io.on('connection', socket => {
         }
         })
         
-      UserModel.updateOne({email: userEmail}, { $set: {login_status: login_status} }, { new: true })
+      UserModel.updateOne({email: email}, { $set: {login_status: login_status} }, { new: true })
         .then(updatedDoc => {
           // Emitting event to update the Kitchen opened across the devices with the realtime order values
           io.sockets.emit("change_data");
