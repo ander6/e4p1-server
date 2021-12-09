@@ -6,21 +6,21 @@ import { createRequire } from "module";
 import router from "./routes/routes.js"; 
 const require = createRequire(import.meta.url);
 const mongodbRoute = process.env.MONGO_DB_URI
-const http=require("http");
-const socketio=require('socket.io');
-
-const app = Express();
-const server=http.createServer(app);
-import { userSocket } from "./services/sockets.js";
-
-
-const io = require("socket.io")(server);
-io.on("connection", socket => {
-    // either with send()
-    socket.on("users", console.log(userSocket())
-    );
-});
+const app = Express()
 const port = process.env.PORT || 3001;
+const http = require('http')
+const server = http.createServer(app)
+
+const socketIO = require('socket.io');
+const io = socketIO(server);
+io.on('connection', socket => {
+  console.log('client connected on websocket');
+});
+
+server.listen(port, () => {
+  console.log('server started and listening on port ' + port);
+});
+
 app.use(Express.urlencoded({ extended: false }));
 app.use(Express.json());
 app.use(function (req, res, next) {
@@ -29,10 +29,7 @@ app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     next();
 })
-app.use((req, res, next) => {
-    req.io = io;
-    return next();
-})
+
 
 app.use(router);
 const options = {
@@ -45,9 +42,7 @@ Mongoose.connect(mongodbRoute, options, (err) => {
     if (err) {
         return console.log(`Error al conectar a la base de datos: ${err}`)
     }
-    server.listen(port, () => {
-        console.log(`Servidor up en ${port}`);
-    });
+   
     
     console.log(`Conexión con Mongo correcta.`)
 })
