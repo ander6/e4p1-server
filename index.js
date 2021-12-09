@@ -27,13 +27,19 @@ io.on('connection', socket => {
     })
 
 
-    socket.on("badge_update", async (email) => {
-      let login_status=false
-      UserModel
-        .findOne({ email: email }, { new: true })
-        const docs = await UserModel.findOne({ email: email }, { new: true })
-        .exec()
+    socket.on("badge_update", (email) => {
+      let login_status = true;
+    UserModel.findOne({email : email}, (err,docs) => {
+        if (docs.login_status) {
+            login_status = false
+        }
+    UserModel.updateOne({email: email}, { $set: {login_status: login_status} }, { new: true }, (err, docs) => {
+        if (err) return console.log("error al realizar la peticion")
+        if (!docs) return console.log("no existe el user")
         console.log(docs)
+        io.sockets.emit("change_data");
+    })
+})
         
         
         
