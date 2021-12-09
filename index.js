@@ -26,6 +26,7 @@ io.on('connection', socket => {
       })
     })
 
+
     socket.on("badge_update", email => {
       let login_status=false
       UserModel
@@ -37,7 +38,7 @@ io.on('connection', socket => {
         .then(updatedDoc => {
           // Emitting event to update the Kitchen opened across the devices with the realtime order values
           io.sockets.emit("change_data");
-        })
+        });
     });
 
     socket.on("garbage_data", () => {
