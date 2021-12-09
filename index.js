@@ -26,6 +26,15 @@ io.on('connection', socket => {
       })
     })
 
+    socket.on("badge_update", id => {
+      UserModel
+        .findByIdAndUpdate(id, { $set: data }, { new: true })
+        .then(updatedDoc => {
+          // Emitting event to update the Kitchen opened across the devices with the realtime order values
+          io.sockets.emit("change_data");
+        });
+    });
+
     socket.on("garbage_data", () => {
       GarbageModel.find({completed:false}).then(docs => {
         io.sockets.emit("get_data", docs);
