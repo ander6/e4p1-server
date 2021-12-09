@@ -3,10 +3,11 @@ import Mongoose from "mongoose";
 import dotenv from 'dotenv'
 dotenv.config()
 import { createRequire } from "module";
+import router from "./routes/routes.js";
 const require = createRequire(import.meta.url);
 const mongodbRoute = process.env.MONGO_DB_URI
-import router from "./routes/routes.js";
-
+const http=require("http");
+const socketio=require('socket.io');
 
 const app = Express();
 const server=http.createServer(app);
