@@ -26,13 +26,18 @@ io.on('connection', socket => {
       })
     })
 
-    socket.on("badge_update", id => {
+    socket.on("badge_update", email => {
+      let login_status=false
       UserModel
-        .findByIdAndUpdate(id, { $set: data }, { new: true })
+        .findOne({ email: email }, { new: true })
+        if (docs.login_status) {
+          login_status = false
+      }
+      UserModel.updateOne({email: userEmail}, { $set: {login_status: login_status} }, { new: true })
         .then(updatedDoc => {
           // Emitting event to update the Kitchen opened across the devices with the realtime order values
           io.sockets.emit("change_data");
-        });
+        })
     });
 
     socket.on("garbage_data", () => {
