@@ -15,6 +15,8 @@ const socketIO = require('socket.io');
 const io = socketIO(server);
 io.on('connection', socket => {
   console.log('client connected on websocket');
+
+  socket.send("Hello!");
 });
 
 server.listen(port, () => {
