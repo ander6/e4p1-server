@@ -1,4 +1,4 @@
-import express from "express";
+import Express from "express";
 import Mongoose from "mongoose";
 import dotenv from 'dotenv'
 dotenv.config()
@@ -8,10 +8,12 @@ const mongodbRoute = process.env.MONGO_DB_URI
 import router from "./routes/routes.js";
 
 
-var express = require('express');
-var app = express();
-var server = app.listen(8810);
-var io = require('socket.io').listen(server);
+const app = Express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+server.listen(4000, () => {
+    console.log('server started on port 4000');
+});
 
 const port = process.env.PORT || 3001;
 app.use(Express.urlencoded({ extended: false }));
@@ -38,7 +40,7 @@ Mongoose.connect(mongodbRoute, options, (err) => {
     if (err) {
         return console.log(`Error al conectar a la base de datos: ${err}`)
     }
-    server.listen(port, () => {
+    app.listen(port, () => {
         console.log(`Servidor up en ${port}`);
     });
     
