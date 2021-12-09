@@ -18,9 +18,11 @@ io.on('connection', socket => {
   console.log('client connected on websocket');
   socket.on('disconnect', () => {
     console.log("disconnected")})
-    socket.on("user_Data", async (data) => {
-      const users = await UserModel.find({}) 
-      socket.emit("users", users)
+
+    socket.on("user_data", () => {
+      UserModel.find({}).then(docs => {
+        io.sockets.emit("get_data", docs);
+      })
     })
   socket.send("Hello!");
 });
