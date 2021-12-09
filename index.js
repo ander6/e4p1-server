@@ -1,4 +1,4 @@
-import Express from "express";
+import express from "express";
 import Mongoose from "mongoose";
 import dotenv from 'dotenv'
 dotenv.config()
@@ -8,11 +8,10 @@ const mongodbRoute = process.env.MONGO_DB_URI
 import router from "./routes/routes.js";
 
 
-const app = Express();
-const http = require('http')
-
-const server = http.createServer(app);
-const io = require('socket.io')(server); // Add this here
+var express = require('express');
+var app = express();
+var server = app.listen(8810);
+var io = require('socket.io').listen(server);
 
 const port = process.env.PORT || 3001;
 app.use(Express.urlencoded({ extended: false }));
