@@ -10,7 +10,7 @@ import { verifyJWT } from "../middlewares/verifyJWT.js";
 router.post('/token/',createNewJWT)
 
 {/* USERS */}
-router.get('/users/',getAllUsers);
+router.get('/users/',verifyJWT,getAllUsers);
 router.get('/users/:id',verifyJWT,getUserById);
 router.post('/users/',insertUserData)
 router.put('/users/:id',verifyJWT,updateUserData);
