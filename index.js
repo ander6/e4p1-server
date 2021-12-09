@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 import { createRequire } from "module";
 import router from "./routes/routes.js"; 
+import UserModel from "./models/userModel.js";
 const require = createRequire(import.meta.url);
 const mongodbRoute = process.env.MONGO_DB_URI
 const app = Express()
@@ -15,7 +16,12 @@ const socketIO = require('socket.io');
 const io = socketIO(server);
 io.on('connection', socket => {
   console.log('client connected on websocket');
-
+  socket.on('disconnect', () => {
+    console.log("disconnected")})
+    socket.on("user_Data", async (data) => {
+      const users = await UserModel.find({}) 
+      socket.emit("users", data)
+    })
   socket.send("Hello!");
 });
 
